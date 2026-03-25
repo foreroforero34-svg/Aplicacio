@@ -1,0 +1,438 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+    <title>Fabaceae de Colombia - Subfamilias y Representantes</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: system-ui, 'Segoe UI', 'Roboto', 'Helvetica Neue', sans-serif;
+            background: linear-gradient(145deg, #e9f5e6 0%, #c8e6c9 100%);
+            min-height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            padding: 1.5rem;
+        }
+
+        /* Tarjeta principal */
+        .app-container {
+            max-width: 1300px;
+            width: 100%;
+            background: #fffffff2;
+            backdrop-filter: blur(2px);
+            border-radius: 2.5rem;
+            box-shadow: 0 25px 45px -12px rgba(0, 0, 0, 0.35), 0 4px 12px rgba(0, 0, 0, 0.1);
+            overflow: hidden;
+            transition: all 0.2s ease;
+        }
+
+        /* Encabezado con botánico */
+        .hero {
+            background: #2c5e2e;
+            background-image: radial-gradient(circle at 10% 30%, #3c7840, #1d3e1f);
+            padding: 1.8rem 2rem;
+            color: white;
+            text-align: center;
+        }
+
+        .hero h1 {
+            font-size: 1.9rem;
+            letter-spacing: -0.3px;
+            font-weight: 700;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 12px;
+            flex-wrap: wrap;
+        }
+
+        .hero h1 span {
+            background: #ffd966cc;
+            padding: 0.2rem 0.8rem;
+            border-radius: 60px;
+            font-size: 1.3rem;
+            color: #1e3a1e;
+        }
+
+        .hero p {
+            margin-top: 0.7rem;
+            opacity: 0.9;
+            font-weight: 500;
+            font-size: 1rem;
+        }
+
+        /* Sistema de pestañas (tabs) */
+        .tabs-nav {
+            display: flex;
+            flex-wrap: wrap;
+            background: #f1f8e9;
+            border-bottom: 2px solid #c5e0b4;
+            padding: 0 0.5rem;
+            gap: 0.25rem;
+        }
+
+        .tab-btn {
+            background: transparent;
+            border: none;
+            padding: 1rem 1.4rem;
+            font-size: 1rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.2s;
+            color: #2d4a22;
+            border-radius: 1.2rem 1.2rem 0 0;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .tab-btn i {
+            font-style: normal;
+            font-weight: normal;
+            font-size: 1.2rem;
+        }
+
+        .tab-btn:hover {
+            background: #e2f0da;
+            color: #1b4d1b;
+        }
+
+        .tab-btn.active {
+            background: white;
+            color: #1f5430;
+            border-bottom: 3px solid #4caf50;
+            box-shadow: 0 -2px 6px rgba(0,0,0,0.02);
+        }
+
+        /* Contenedor de contenido */
+        .panels-container {
+            background: white;
+            padding: 2rem 1.8rem;
+        }
+
+        .tab-panel {
+            display: none;
+            animation: fadeIn 0.25s ease-out;
+        }
+
+        .tab-panel.active-panel {
+            display: block;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(5px);}
+            to { opacity: 1; transform: translateY(0);}
+        }
+
+        /* Tarjetas de representantes */
+        .subfamily-title {
+            font-size: 1.9rem;
+            font-weight: 700;
+            color: #1f4f2b;
+            border-left: 8px solid #5cb85c;
+            padding-left: 1rem;
+            margin-bottom: 0.5rem;
+        }
+
+        .subfamily-desc {
+            color: #3e5a3a;
+            margin-bottom: 1.8rem;
+            font-size: 1rem;
+            border-bottom: 1px dashed #cfe3c3;
+            padding-bottom: 0.6rem;
+        }
+
+        .cards-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+            gap: 1.8rem;
+            margin-top: 1rem;
+        }
+
+        .species-card {
+            background: #fefef7;
+            border-radius: 1.5rem;
+            overflow: hidden;
+            transition: all 0.25s;
+            box-shadow: 0 8px 20px rgba(0, 0, 0, 0.05);
+            border: 1px solid #e0f0da;
+        }
+
+        .species-card:hover {
+            transform: translateY(-6px);
+            box-shadow: 0 18px 30px -10px rgba(40, 90, 30, 0.25);
+            border-color: #b8daa4;
+        }
+
+        .card-img {
+            background: #d9e6c3;
+            height: 150px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 3.2rem;
+            color: #2a6b2f;
+        }
+
+        .card-content {
+            padding: 1.2rem 1.2rem 1.5rem;
+        }
+
+        .card-content h3 {
+            font-size: 1.4rem;
+            font-weight: 700;
+            color: #1e4620;
+            margin-bottom: 0.3rem;
+        }
+
+        .scientific {
+            font-style: italic;
+            font-weight: 500;
+            color: #4b6e3b;
+            font-size: 0.9rem;
+            margin-bottom: 0.75rem;
+            border-left: 3px solid #9ccc65;
+            padding-left: 0.6rem;
+        }
+
+        .info {
+            font-size: 0.9rem;
+            color: #2c3e2b;
+            line-height: 1.4;
+            margin-top: 0.6rem;
+        }
+
+        .badge-region {
+            background: #eef5e8;
+            display: inline-block;
+            padding: 0.2rem 0.7rem;
+            border-radius: 30px;
+            font-size: 0.7rem;
+            font-weight: 600;
+            color: #2d6a2b;
+            margin-top: 0.7rem;
+        }
+
+        footer {
+            background: #eef3ea;
+            text-align: center;
+            padding: 1rem;
+            font-size: 0.8rem;
+            color: #4f6b3e;
+            border-top: 1px solid #d4e2c8;
+        }
+
+        @media (max-width: 680px) {
+            .tabs-nav {
+                justify-content: center;
+            }
+            .tab-btn {
+                padding: 0.7rem 1rem;
+                font-size: 0.85rem;
+            }
+            .panels-container {
+                padding: 1.5rem;
+            }
+            .subfamily-title {
+                font-size: 1.5rem;
+            }
+        }
+    </style>
+</head>
+<body>
+<div class="app-container">
+    <div class="hero">
+        <h1>
+            🌿 Fabaceae de Colombia 
+            <span>6 subfamilias</span>
+        </h1>
+        <p>Leguminosas — Diversidad y representantes autóctonos en los ecosistemas colombianos</p>
+    </div>
+
+    <div class="tabs-nav" id="tabsNav">
+        <!-- Las pestañas se generarán dinámicamente con JS pero también pueden ir estáticas; 
+             mejor crear desde JS para mantener sincronía con datos -->
+    </div>
+
+    <div class="panels-container" id="panelsContainer">
+        <!-- Los 6 paneles se inyectarán desde JS -->
+    </div>
+    <footer>
+        🌱 Basado en la clasificación APG IV | Subfamilias: Caesalpinioideae, Cercidoideae, Detarioideae, Dialioideae, Faboideae, Mimosoideae
+        <br>Representantes emblemáticos de Colombia – diversidad andina, amazonía y caribe.
+    </footer>
+</div>
+
+<script>
+    // Definición de datos: 6 subfamilias de Fabaceae con sus representantes para Colombia
+    // Cada objeto contiene: id, nombre, descripcion corta, y array de especies (representantes)
+    const subfamiliasData = [
+        {
+            id: "caesalpinioideae",
+            nombre: "Caesalpinioideae",
+            descripcion: "Subfamilia con flores zigomorfas, generalmente hojas bipinnadas. Incluye árboles y arbustos tropicales. En Colombia se encuentran en bosques húmedos y secos.",
+            representantes: [
+                { nombreComun: "Algarrobo", nombreCientifico: "Hymenaea courbaril", info: "Árbol de gran porte, madera valiosa. Presente en la región Caribe y Amazonía colombiana. Frutos comestibles." },
+                { nombreComun: "Sangregao", nombreCientifico: "Bauhinia picta", info: "Arbusto ornamental con hojas bilobadas. Se distribuye en el Valle del Cauca y Andes centrales." },
+                { nombreComun: "Caro", nombreCientifico: "Brownea grandiceps", info: "Árbol ornamental llamado 'candelabro'. En Colombia en bosques húmedos del Chocó y Magdalena." }
+            ]
+        },
+        {
+            id: "cercidoideae",
+            nombre: "Cercidoideae",
+            descripcion: "Anteriormente parte de Caesalpinioideae. Hojas simples, bilobadas o divididas. Flores vistosas. Presentes en zonas tropicales de Colombia.",
+            representantes: [
+                { nombreComun: "Pata de vaca", nombreCientifico: "Bauhinia variegata", info: "Árbol ornamental con flores rosadas o blancas, adaptado a zonas urbanas y cafeteras de Colombia." },
+                { nombreComun: "Bejuco de cerca", nombreCientifico: "Bauhinia glabra", info: "Liana trepadora común en bosques secos del Tolima y Huila. Flores amarillas." },
+                { nombreComun: "Pie de cabra", nombreCientifico: "Bauhinia aculeata", info: "Arbusto espinoso, presente en la región Caribe (Córdoba, Sucre). Usado en cercas vivas." }
+            ]
+        },
+        {
+            id: "detarioideae",
+            nombre: "Detarioideae",
+            descripcion: "Grupo con hojas usualmente pinnadas, flores con estambres fértiles. Incluye especies maderables de la Amazonía y Chocó biogeográfico.",
+            representantes: [
+                { nombreComun: "Mariquite", nombreCientifico: "Eperua falcata", info: "Árbol de gran altura en la Amazonía colombiana (Guainía, Vaupés). Corteza utilizada tradicionalmente." },
+                { nombreComun: "Abarco", nombreCientifico: "Cariniana pyriformis", info: "Especie emblemática de bosques húmedos, aunque en peligro. Presente en Santander y Antioquia." },
+                { nombreComun: "Manglar de montaña", nombreCientifico: "Macrolobium acaciifolium", info: "Árbol ribereño en la Orinoquía y Amazonía, flores blancas muy vistosas." }
+            ]
+        },
+        {
+            id: "dialioideae",
+            nombre: "Dialioideae",
+            descripcion: "Subfamilia pequeña, antes parte de Caesalpinioideae. Flores usualmente con pocos estambres. Representantes tropicales en Colombia.",
+            representantes: [
+                { nombreComun: "Algarrobillo", nombreCientifico: "Andira inermis", info: "Árbol de hasta 20 m, presente en las costas del Pacífico y Caribe colombiano. Frutos tipo drupa." },
+                { nombreComun: "Comino de monte", nombreCientifico: "Dialium guianense", info: "Especie amazónica, madera dura. Se encuentra en Caquetá y Amazonas. Fruto comestible." },
+                { nombreComun: "Cachimbo", nombreCientifico: "Apuleia leiocarpa", info: "Árbol alto de los Llanos orientales y pie de monte. Madera apreciada." }
+            ]
+        },
+        {
+            id: "faboideae",
+            nombre: "Faboideae",
+            descripcion: "Subfamilia más diversa, con flores papilionáceas. Incluye frijoles, arvejas y numerosos árboles andinos. En Colombia es clave en páramos y bosques.",
+            representantes: [
+                { nombreComun: "Chocho andino", nombreCientifico: "Lupinus mutabilis", info: "Planta herbácea cultivada en la región andina (Nariño, Boyacá). Alto valor nutritivo." },
+                { nombreComun: "Cedro rosado", nombreCientifico: "Ormosia coccinea", info: "Árbol de la Amazonía y cuenca del Magdalena, semillas rojas decorativas. Madera de calidad." },
+                { nombreComun: "Sietecueros", nombreCientifico: "Erythrina edulis", info: "Árbol de uso en cercas vivas y alimentación (chachafruto). Presente en los Andes colombianos." },
+                { nombreComun: "Guamo santandereano", nombreCientifico: "Inga edulis", info: "Fruto comestible (guama), árbol fijador de nitrógeno muy común en cafetales de Colombia." }
+            ]
+        },
+        {
+            id: "mimosoideae",
+            nombre: "Mimosoideae",
+            descripcion: "Flores actinomorfas, agrupadas en cabezuelas o espigas. Incluye las acacias y 'carboneros'. Muy relevantes en ecosistemas secos y sabanas.",
+            representantes: [
+                { nombreComun: "Carbón", nombreCientifico: "Anadenanthera peregrina", info: "Árbol de la región Caribe y Magdalena medio. Corteza y semillas con usos tradicionales." },
+                { nombreComun: "Dormidera", nombreCientifico: "Mimosa pudica", info: "Planta herbácea que cierra sus hojas al tacto. Muy común en bordes de carretera y zonas abiertas." },
+                { nombreComun: "Cují", nombreCientifico: "Prosopis juliflora", info: "Árbol espinoso de la Guajira y Cesar, resistente a sequía, usado para leña y forraje." },
+                { nombreComun: "Zarza", nombreCientifico: "Acacia farnesiana", info: "Arbusto aromático con flores amarillas. Presente en valles secos del Tolima y Atlántico." }
+            ]
+        }
+    ];
+
+    // Función para crear la interfaz de pestañas y paneles
+    function buildApp() {
+        const tabsNav = document.getElementById('tabsNav');
+        const panelsContainer = document.getElementById('panelsContainer');
+        
+        // Limpiar contenedores
+        tabsNav.innerHTML = '';
+        panelsContainer.innerHTML = '';
+        
+        // Crear elementos para cada subfamilia
+        subfamiliasData.forEach((subfamilia, idx) => {
+            // Botón de pestaña
+            const tabBtn = document.createElement('button');
+            tabBtn.className = 'tab-btn';
+            if (idx === 0) tabBtn.classList.add('active');
+            // Asignar data-index
+            tabBtn.setAttribute('data-tab-index', idx);
+            // Icono simbólico según subfamilia (pequeño emoji)
+            let icono = '';
+            if (subfamilia.id === 'caesalpinioideae') icono = '🌳';
+            else if (subfamilia.id === 'cercidoideae') icono = '🍃';
+            else if (subfamilia.id === 'detarioideae') icono = '🌲';
+            else if (subfamilia.id === 'dialioideae') icono = '🪵';
+            else if (subfamilia.id === 'faboideae') icono = '🫘';
+            else icono = '🌿';
+            
+            tabBtn.innerHTML = `<i>${icono}</i> ${subfamilia.nombre}`;
+            tabsNav.appendChild(tabBtn);
+            
+            // Crear panel correspondiente
+            const panel = document.createElement('div');
+            panel.className = 'tab-panel';
+            if (idx === 0) panel.classList.add('active-panel');
+            panel.setAttribute('data-panel-index', idx);
+            
+            // Generar contenido del panel (título, descripción y tarjetas)
+            let cardsHTML = `
+                <div class="subfamily-title">${subfamilia.nombre}</div>
+                <div class="subfamily-desc">${subfamilia.descripcion}</div>
+                <div class="cards-grid">
+            `;
+            
+            subfamilia.representantes.forEach(rep => {
+                cardsHTML += `
+                    <div class="species-card">
+                        <div class="card-img">
+                            🌱
+                        </div>
+                        <div class="card-content">
+                            <h3>${rep.nombreComun}</h3>
+                            <div class="scientific">${rep.nombreCientifico}</div>
+                            <div class="info">${rep.info}</div>
+                            <div class="badge-region">📍 Colombia</div>
+                        </div>
+                    </div>
+                `;
+            });
+            
+            cardsHTML += `</div>`;
+            panel.innerHTML = cardsHTML;
+            panelsContainer.appendChild(panel);
+        });
+        
+        // Agregar eventos a los botones de pestaña
+        const tabBtns = document.querySelectorAll('.tab-btn');
+        const panels = document.querySelectorAll('.tab-panel');
+        
+        function switchTab(activeIndex) {
+            // Actualizar clases de botones
+            tabBtns.forEach((btn, i) => {
+                if (i === activeIndex) {
+                    btn.classList.add('active');
+                } else {
+                    btn.classList.remove('active');
+                }
+            });
+            // Actualizar paneles
+            panels.forEach((panel, i) => {
+                if (i === activeIndex) {
+                    panel.classList.add('active-panel');
+                } else {
+                    panel.classList.remove('active-panel');
+                }
+            });
+        }
+        
+        tabBtns.forEach((btn, index) => {
+            btn.addEventListener('click', () => {
+                switchTab(index);
+            });
+        });
+    }
+    
+    // Inicializar la aplicación cuando el DOM esté listo
+    document.addEventListener('DOMContentLoaded', buildApp);
+</script>
+</body>
+</html>
